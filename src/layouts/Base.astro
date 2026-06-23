@@ -32,6 +32,9 @@ const dir = lang === 'fa' ? 'rtl' : 'ltr';
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE.author} />
+    {SITE.googleSiteVerification && (
+      <meta name="google-site-verification" content={SITE.googleSiteVerification} />
+    )}
     <link rel="canonical" href={canonical} />
 
     <!-- Open Graph -->

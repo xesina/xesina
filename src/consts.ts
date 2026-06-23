@@ -6,6 +6,8 @@ export const SITE = {
   url: 'https://xesina.com',
   email: 'hello@xesina.com',
   github: 'https://github.com/xesina',
+  // Google Search Console "HTML tag" verification token (the content="..." value).
+  googleSiteVerification: '',
 } as const;
 
 export const NAV = [
