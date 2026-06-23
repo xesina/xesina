@@ -1,0 +1,12 @@
+node_modules
+dist
+.astro
+.git
+.github
+design-mockups
+npm-debug.log*
+*.log
+.DS_Store
+.env
+.env.*
+.vercel

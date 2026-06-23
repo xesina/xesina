@@ -1,0 +1,19 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Stream from '../../../components/Stream.astro';
+import Sidebar from '../../../components/Sidebar.astro';
+import { getStreamItems } from '../../../lib/stream';
+
+const items = (await getStreamItems()).filter((i) => i.lang === 'fa' && i.type === 'link');
+---
+
+<Base lang="fa" title="پیوندها" description="پیوندهای خواندنی همراه با یادداشت.">
+  <section class="intro">
+    <h1>پیوندها</h1>
+    <p>چیزهایی که خوانده‌ام و می‌خواهم به یاد بسپارم — هرکدام با یک خط دربارهٔ اینکه چرا ارزش خواندن دارد.</p>
+  </section>
+
+  <Stream items={items} lang="fa" />
+
+  <Sidebar slot="sidebar" lang="fa" contentLang="fa" />
+</Base>

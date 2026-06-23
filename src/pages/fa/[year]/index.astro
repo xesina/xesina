@@ -1,0 +1,34 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Stream from '../../../components/Stream.astro';
+import Sidebar from '../../../components/Sidebar.astro';
+import { getArchiveFa, getItemsByJYear } from '../../../lib/taxonomy';
+import { faNum, toFaDigits } from '../../../lib/format';
+
+export async function getStaticPaths() {
+  const years = await getArchiveFa();
+  return years.map((y) => ({ params: { year: String(y.year) }, props: { bucket: y } }));
+}
+
+const { bucket } = Astro.props;
+const year = bucket.year;
+const items = await getItemsByJYear(year);
+---
+
+<Base lang="fa" title={`بایگانی ${toFaDigits(year)}`} description={`همهٔ محتوای فارسی سال ${toFaDigits(year)}.`}>
+  <section class="page-head">
+    <h1>{toFaDigits(year)}</h1>
+    <p>
+      {faNum(bucket.counts.total, 'fa')} مورد ·
+      <a href="/fa/archive/">همهٔ سال‌ها</a>
+    </p>
+  </section>
+
+  <div class="month-jump">
+    {bucket.months.map((m) => <a href={`/fa/${year}/${m.slug}/`}>{m.label.split(' ')[0]} <b>{faNum(m.counts.total, 'fa')}</b></a>)}
+  </div>
+
+  <Stream items={items} lang="fa" />
+
+  <Sidebar slot="sidebar" lang="fa" contentLang="fa" />
+</Base>

@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Stream from '../components/Stream.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { getStreamItems } from '../lib/stream';
+
+const items = await getStreamItems();
+---
+
+<Base>
+  <section class="intro">
+    <h1>Hey, I'm Sina 👋</h1>
+    <p>
+      Software engineer and open-source enthusiast at <a href="https://vio.com">Vio.com</a>. I enjoy
+      taking systems apart to see how they work. Here I keep my <a href="/writing/">writing</a>,
+      <a href="/links/">links</a> worth saving, and the odd <a href="/notes/">note</a>. A few things
+      I've built live under <a href="/projects/">projects</a>.
+    </p>
+  </section>
+
+  <Stream items={items} />
+
+  <Sidebar slot="sidebar" />
+</Base>

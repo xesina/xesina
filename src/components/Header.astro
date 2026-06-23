@@ -1,0 +1,45 @@
+---
+import { SITE, NAV } from '../consts';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+
+// On the Persian edition, nav links stay within `/fa/`.
+const homeHref = lang === 'fa' ? '/fa/' : '/';
+const hrefFor = (key: string, href: string) =>
+  lang === 'fa' ? (key === 'home' ? '/fa/' : `/fa${href}`) : href;
+---
+
+<header class="top">
+  <a class="brand" href={homeHref}>{SITE.title}</a>
+  <nav class="nav-main" aria-label="Primary">
+    {
+      NAV.map((item) => {
+        const href = hrefFor(item.key, item.href);
+        return (
+          <a href={href} aria-current={isActive(href) ? 'page' : undefined}>
+            {t(lang, item.key)}
+          </a>
+        );
+      })
+    }
+    <span class="lang-switch" aria-label="Language">
+      <a href="/" lang="en" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+      <a href="/fa/" lang="fa" aria-current={lang === 'fa' ? 'page' : undefined}>فارسی</a>
+    </span>
+    <a class="rss" href="/feed.xml" title={t(lang, 'rss')} aria-label={t(lang, 'rss')}>
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path
+          d="M2 11.5a2 2 0 110 4 2 2 0 010-4zM2 6a8 8 0 018 8H7.8A5.8 5.8 0 002 8.2V6zM2 2a12 12 0 0112 12h-2.2A9.8 9.8 0 002 4.2V2z"
+        ></path>
+      </svg>
+    </a>
+  </nav>
+</header>

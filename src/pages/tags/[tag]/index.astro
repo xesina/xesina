@@ -1,0 +1,29 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Stream from '../../../components/Stream.astro';
+import Sidebar from '../../../components/Sidebar.astro';
+import { getTags, getItemsByTag } from '../../../lib/taxonomy';
+
+export async function getStaticPaths() {
+  const tags = await getTags();
+  return tags.map((t) => ({ params: { tag: t.tag }, props: { tag: t.tag, count: t.count } }));
+}
+
+const { tag, count } = Astro.props;
+const items = await getItemsByTag(tag);
+---
+
+<Base title={`#${tag}`} description={`Items tagged ${tag} on xesina.com.`}>
+  <section class="page-head">
+    <h1>#{tag}</h1>
+    <p>
+      {count} {count === 1 ? 'item' : 'items'} ·
+      <a href={`/tags/${tag}/feed.xml`}>RSS</a> ·
+      <a href="/tags/">all tags</a>
+    </p>
+  </section>
+
+  <Stream items={items} />
+
+  <Sidebar slot="sidebar" />
+</Base>

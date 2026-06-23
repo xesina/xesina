@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import Stream from '../../components/Stream.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { getArchive, getItemsByYear } from '../../lib/taxonomy';
+
+export async function getStaticPaths() {
+  const years = await getArchive();
+  return years.map((y) => ({ params: { year: String(y.year) }, props: { bucket: y } }));
+}
+
+const { bucket } = Astro.props;
+const year = bucket.year;
+const items = await getItemsByYear(year);
+---
+
+<Base title={`Archive ${year}`} description={`Everything from ${year} on xesina.com.`}>
+  <section class="page-head">
+    <h1>{year}</h1>
+    <p>
+      {bucket.counts.total} {bucket.counts.total === 1 ? 'item' : 'items'} ·
+      <a href="/archive/">all years</a>
+    </p>
+  </section>
+
+  <div class="month-jump">
+    {bucket.months.map((m) => <a href={`/${year}/${m.slug}/`}>{m.label.split(' ')[0]} <b>{m.counts.total}</b></a>)}
+  </div>
+
+  <Stream items={items} />
+
+  <Sidebar slot="sidebar" />
+</Base>

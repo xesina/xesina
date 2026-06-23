@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getArchive, type TypeCounts } from '../../lib/taxonomy';
+
+const years = await getArchive();
+
+const summary = (c: TypeCounts) => {
+  const parts: string[] = [];
+  if (c.entry) parts.push(`${c.entry} ${c.entry === 1 ? 'entry' : 'entries'}`);
+  if (c.link) parts.push(`${c.link} ${c.link === 1 ? 'link' : 'links'}`);
+  if (c.note) parts.push(`${c.note} ${c.note === 1 ? 'note' : 'notes'}`);
+  return parts.join(' · ');
+};
+---
+
+<Base title="Archive" description="Everything on xesina.com, by year and month.">
+  <section class="page-head">
+    <h1>Archive</h1>
+    <p>Everything, by year and month.</p>
+  </section>
+
+  <div class="archive">
+    {
+      years.map((y) => (
+        <div class="arc-year">
+          <a class="arc-yhead" href={`/${y.year}/`}>
+            <span class="arc-yn">{y.year}</span>
+            <span class="arc-c">{summary(y.counts)}</span>
+          </a>
+          <div class="arc-months">
+            {y.months.map((m) => (
+              <a href={`/${y.year}/${m.slug}/`}>
+                {m.label.split(' ')[0]}
+                <b>{m.counts.total}</b>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+    {years.length === 0 && <p class="empty">Nothing archived yet.</p>}
+  </div>
+</Base>

@@ -1,0 +1,33 @@
+---
+import { SITE } from '../consts';
+import { getArchive } from '../lib/taxonomy';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+
+const year = new Date().getUTCFullYear();
+const years = await getArchive();
+---
+
+<footer class="foot">
+  {
+    years.length > 0 && (
+      <nav class="browse" aria-label="Browse">
+        <a href={lang === 'fa' ? '/fa/tags/' : '/tags/'}>{t(lang, 'tags')}</a>
+        <a href={lang === 'fa' ? '/fa/archive/' : '/archive/'}>{t(lang, 'archive')}</a>
+        {lang === 'en' && years.map((y) => <a href={`/${y.year}/`}>{y.year}</a>)}
+      </nav>
+    )
+  }
+  <div class="footmeta">
+    <span>© {year} {SITE.author}</span>
+    <span>
+      <a href={SITE.github} rel="me">GitHub</a> ·
+      <a href={`mailto:${SITE.email}`}>Email</a> ·
+      <a href="/feed.xml">RSS</a>
+    </span>
+  </div>
+</footer>

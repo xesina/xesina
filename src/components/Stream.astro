@@ -1,0 +1,76 @@
+---
+import { groupByDay, type StreamItem } from '../lib/stream';
+import { fmtDay, fmtTime, hostOf, faNum } from '../lib/format';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  items: StreamItem[];
+  lang?: Lang;
+}
+
+const { items, lang = 'en' } = Astro.props;
+const groups = groupByDay(items, (d) => fmtDay(d, lang));
+const tagBase = lang === 'fa' ? '/fa' : '';
+---
+
+{
+  groups.length === 0 && <p class="empty">{t(lang, 'empty')}</p>
+}
+
+{
+  groups.map((g) => (
+    <section class="daygroup">
+      <h2 class="day">{g.day}</h2>
+      {g.items.map((it) => (
+        <article class="item" lang={it.lang} dir={it.lang === 'fa' ? 'rtl' : undefined}>
+          <div class="head">
+            <span class={`kind ${it.type}`}>
+              <span class="dot" />
+              {t(lang, it.type)}
+            </span>
+            <a class="time" href={it.href}>{fmtTime(it.pubDate, it.lang)}</a>
+          </div>
+
+          {it.type === 'note' && it.Content && (
+            <div class="note-body">
+              <it.Content />
+            </div>
+          )}
+
+          {it.type === 'link' && (
+            <>
+              <h3 class="t">
+                <a href={it.url} target="_blank" rel="noopener">
+                  {it.title} <span class="out">↗ {hostOf(it.url!)}</span>
+                </a>
+              </h3>
+              {it.description && <p class="ex">{it.description}</p>}
+            </>
+          )}
+
+          {it.type === 'entry' && (
+            <>
+              <h3 class="t">
+                <a href={it.href}>{it.title}</a>
+              </h3>
+              {it.description && (
+                <p class="ex">
+                  {it.description}{' '}
+                  <span class="wc">· {faNum(it.words ?? 0, lang)} {t(lang, 'words')}</span>
+                </p>
+              )}
+            </>
+          )}
+
+          {it.tags.length > 0 && (
+            <div class="tags">
+              {it.tags.map((tag) => (
+                <a href={`${tagBase}/tags/${tag}/`}>#{tag}</a>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </section>
+  ))
+}

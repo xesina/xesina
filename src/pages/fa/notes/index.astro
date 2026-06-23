@@ -1,0 +1,19 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Stream from '../../../components/Stream.astro';
+import Sidebar from '../../../components/Sidebar.astro';
+import { getStreamItems } from '../../../lib/stream';
+
+const items = (await getStreamItems()).filter((i) => i.lang === 'fa' && i.type === 'note');
+---
+
+<Base lang="fa" title="یادداشت‌ها" description="فکرهای کوتاه.">
+  <section class="intro">
+    <h1>یادداشت‌ها</h1>
+    <p>فکرهای کوتاه، همان‌طور که می‌آیند.</p>
+  </section>
+
+  <Stream items={items} lang="fa" />
+
+  <Sidebar slot="sidebar" lang="fa" contentLang="fa" />
+</Base>

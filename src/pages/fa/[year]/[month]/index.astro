@@ -1,0 +1,35 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import Stream from '../../../../components/Stream.astro';
+import Sidebar from '../../../../components/Sidebar.astro';
+import { getArchiveFa, getItemsByJMonth } from '../../../../lib/taxonomy';
+import { faNum, toFaDigits } from '../../../../lib/format';
+
+export async function getStaticPaths() {
+  const years = await getArchiveFa();
+  return years.flatMap((y) =>
+    y.months.map((m) => ({
+      params: { year: String(y.year), month: m.slug },
+      props: { year: y.year, monthIndex: m.monthIndex, label: m.label, total: m.counts.total },
+    })),
+  );
+}
+
+const { year, monthIndex, label, total } = Astro.props;
+const items = await getItemsByJMonth(year, monthIndex);
+---
+
+<Base lang="fa" title={`بایگانی ${label}`} description={`همهٔ محتوای فارسی ${label}.`}>
+  <section class="page-head">
+    <h1>{label}</h1>
+    <p>
+      {faNum(total, 'fa')} مورد ·
+      <a href={`/fa/${year}/`}>{toFaDigits(year)}</a> ·
+      <a href="/fa/archive/">همهٔ سال‌ها</a>
+    </p>
+  </section>
+
+  <Stream items={items} lang="fa" />
+
+  <Sidebar slot="sidebar" lang="fa" contentLang="fa" />
+</Base>

@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import Stream from '../../components/Stream.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { getStreamItems } from '../../lib/stream';
+
+const items = (await getStreamItems()).filter((i) => i.type === 'entry');
+---
+
+<Base title="Writing" description="Long-form posts by Sina Saeidi.">
+  <section class="intro">
+    <h1>Writing</h1>
+    <p>Long-form posts about systems, the craft, and the occasional detour into philosophy.</p>
+  </section>
+  <Stream items={items} />
+
+  <Sidebar slot="sidebar" />
+</Base>

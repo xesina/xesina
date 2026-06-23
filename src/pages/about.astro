@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../consts';
+---
+
+<Base title="About" description="About Sina Saeidi.">
+  <section class="page-head">
+    <h1>About</h1>
+  </section>
+
+  <div class="prose">
+    <p>
+      Hey, I'm Sina — a software engineer and open-source enthusiast. I currently work as a Software
+      Engineer at <a href="https://vio.com">Vio.com</a>.
+    </p>
+    <p>
+      I enjoy systems and like to explore and tinker with them — taking things apart until I
+      understand them all the way down. In my free time I find philosophy intriguing, and I like to
+      read and write.
+    </p>
+    <p>
+      I like to keep things straightforward. I write about life, the tech I'm into, and my career
+      journey, sharing what I learn along the way.
+    </p>
+    <h2>Elsewhere</h2>
+    <ul>
+      <li><a href={SITE.github} rel="me">GitHub</a></li>
+      <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      <li><a href="/feed.xml">RSS</a></li>
+    </ul>
+    <p><em>This is placeholder copy — edit <code>src/pages/about.astro</code> to make it yours.</em></p>
+  </div>
+</Base>

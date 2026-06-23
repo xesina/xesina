@@ -1,0 +1,44 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getArchiveFa, type TypeCounts } from '../../../lib/taxonomy';
+import { faNum, toFaDigits } from '../../../lib/format';
+
+const years = await getArchiveFa();
+
+const summary = (c: TypeCounts) => {
+  const parts: string[] = [];
+  if (c.entry) parts.push(`${faNum(c.entry, 'fa')} نوشته`);
+  if (c.link) parts.push(`${faNum(c.link, 'fa')} پیوند`);
+  if (c.note) parts.push(`${faNum(c.note, 'fa')} یادداشت`);
+  return parts.join(' · ');
+};
+---
+
+<Base lang="fa" title="بایگانی" description="همهٔ محتوای فارسی، بر اساس سال و ماه.">
+  <section class="page-head">
+    <h1>بایگانی</h1>
+    <p>همهٔ محتوای فارسی، بر اساس سال و ماه (شمسی).</p>
+  </section>
+
+  <div class="archive">
+    {
+      years.map((y) => (
+        <div class="arc-year">
+          <a class="arc-yhead" href={`/fa/${y.year}/`}>
+            <span class="arc-yn">{toFaDigits(y.year)}</span>
+            <span class="arc-c">{summary(y.counts)}</span>
+          </a>
+          <div class="arc-months">
+            {y.months.map((m) => (
+              <a href={`/fa/${y.year}/${m.slug}/`}>
+                {m.label.split(' ')[0]}
+                <b>{faNum(m.counts.total, 'fa')}</b>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+    {years.length === 0 && <p class="empty">هنوز چیزی بایگانی نشده.</p>}
+  </div>
+</Base>

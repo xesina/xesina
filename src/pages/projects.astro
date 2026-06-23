@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => {
+    // featured first, then by `order`, then by year desc
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+    return (b.data.year ?? 0) - (a.data.year ?? 0);
+  });
+
+const STATUS_LABEL = { active: 'Active', archived: 'Archived', wip: 'WIP' } as const;
+---
+
+<Base title="Projects" description="Things Sina Saeidi has built.">
+  <section class="page-head">
+    <h1>Projects</h1>
+    <p>A few things I've built and maintain — mostly open source, mostly systems-flavoured.</p>
+  </section>
+
+  <div class="projects">
+    {
+      projects.map((p) => {
+        const href = p.data.link ?? p.data.repo;
+        const Tag = href ? 'a' : 'div';
+        return (
+          <Tag
+            class="project"
+            href={href}
+            {...(href ? { target: '_blank', rel: 'noopener' } : {})}
+          >
+            <div class="ptop">
+              <h3>{p.data.title}</h3>
+              {p.data.status && <span class="pstatus">{STATUS_LABEL[p.data.status]}</span>}
+              {p.data.year && <span class="pyear">{p.data.year}</span>}
+            </div>
+            <p class="pdesc">{p.data.description}</p>
+            <div class="pmeta">
+              {p.data.tech.length > 0 && <span class="ptech">{p.data.tech.join(' · ')}</span>}
+              <span class="plinks">
+                {p.data.repo && <span>Code ↗</span>}
+                {p.data.link && <span>Live ↗</span>}
+              </span>
+            </div>
+          </Tag>
+        );
+      })
+    }
+    {projects.length === 0 && <p class="empty">No projects yet.</p>}
+  </div>
+</Base>

@@ -1,0 +1,29 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import Stream from '../../../../components/Stream.astro';
+import Sidebar from '../../../../components/Sidebar.astro';
+import { getTags, getItemsByTag } from '../../../../lib/taxonomy';
+import { faNum } from '../../../../lib/format';
+
+export async function getStaticPaths() {
+  const tags = await getTags('fa');
+  return tags.map((t) => ({ params: { tag: t.tag }, props: { tag: t.tag, count: t.count } }));
+}
+
+const { tag, count } = Astro.props;
+const items = (await getItemsByTag(tag)).filter((i) => i.lang === 'fa');
+---
+
+<Base lang="fa" title={`#${tag}`} description={`موارد با برچسب ${tag}.`}>
+  <section class="page-head">
+    <h1>#{tag}</h1>
+    <p>
+      {faNum(count, 'fa')} مورد ·
+      <a href="/fa/tags/">همهٔ برچسب‌ها</a>
+    </p>
+  </section>
+
+  <Stream items={items} lang="fa" />
+
+  <Sidebar slot="sidebar" lang="fa" contentLang="fa" />
+</Base>

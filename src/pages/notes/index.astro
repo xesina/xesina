@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import Stream from '../../components/Stream.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { getStreamItems } from '../../lib/stream';
+
+const items = (await getStreamItems()).filter((i) => i.type === 'note');
+---
+
+<Base title="Notes" description="Short thoughts by Sina Saeidi.">
+  <section class="intro">
+    <h1>Notes</h1>
+    <p>Short thoughts, posted as they come.</p>
+  </section>
+  <Stream items={items} />
+
+  <Sidebar slot="sidebar" />
+</Base>

@@ -1,0 +1,27 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getTags } from '../../../lib/taxonomy';
+import { faNum } from '../../../lib/format';
+
+const tags = await getTags('fa');
+const total = tags.reduce((n, t) => n + t.count, 0);
+---
+
+<Base lang="fa" title="برچسب‌ها" description="مرور محتوای فارسی بر اساس برچسب.">
+  <section class="page-head">
+    <h1>برچسب‌ها</h1>
+    <p>{faNum(tags.length, 'fa')} برچسب در {faNum(total, 'fa')} مورد.</p>
+  </section>
+
+  <div class="tagcloud">
+    {
+      tags.map((t) => (
+        <a href={`/fa/tags/${t.tag}/`}>
+          {t.tag}
+          <b>{faNum(t.count, 'fa')}</b>
+        </a>
+      ))
+    }
+    {tags.length === 0 && <p class="empty">هنوز برچسبی نیست.</p>}
+  </div>
+</Base>

@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { fmtDay } from '../../lib/format';
+import { t } from '../../i18n';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes', (e) => !e.data.draft);
+  return notes.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, pubDate, tags, lang } = entry.data;
+const base = lang === 'fa' ? '/fa' : '';
+---
+
+<Base title={title ?? 'Note'} ogType="article" lang={lang}>
+  <article>
+    <header class="post-head">
+      <a class="back" href={`${base}/notes/`}>{t(lang, 'notes')}</a>
+      {title && <h1>{title}</h1>}
+      <div class="post-meta">
+        <span class="kind note"><span class="dot"></span>{t(lang, 'note')}</span>
+        <time datetime={pubDate.toISOString()}>{fmtDay(pubDate, lang)}</time>
+      </div>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {
+      tags.length > 0 && (
+        <div class="tag-row">
+          {tags.map((tag) => (
+            <a href={`${base}/tags/${tag}/`}>#{tag}</a>
+          ))}
+        </div>
+      )
+    }
+  </article>
+</Base>

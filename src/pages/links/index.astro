@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import Stream from '../../components/Stream.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { getStreamItems } from '../../lib/stream';
+
+const items = (await getStreamItems()).filter((i) => i.type === 'link');
+---
+
+<Base title="Links" description="External links worth saving, with commentary, by Sina Saeidi.">
+  <section class="intro">
+    <h1>Links</h1>
+    <p>Things I've read and want to remember — each with a line on why it's worth your time.</p>
+  </section>
+  <Stream items={items} />
+
+  <Sidebar slot="sidebar" />
+</Base>

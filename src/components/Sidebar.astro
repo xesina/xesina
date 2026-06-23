@@ -1,0 +1,58 @@
+---
+import { getTags, getArchive, getArchiveFa } from '../lib/taxonomy';
+import { t, type Lang } from '../i18n';
+import { faNum } from '../lib/format';
+
+interface Props {
+  /** UI language for headings/numerals/links. */
+  lang?: Lang;
+  /** Restrict the tag cloud to one content language. */
+  contentLang?: Lang;
+  /** Show the archive widget. */
+  showArchive?: boolean;
+}
+
+const { lang = 'en', contentLang, showArchive = true } = Astro.props;
+const fa = lang === 'fa';
+const base = fa ? '/fa' : '';
+
+const tags = (await getTags(contentLang)).sort((a, b) => b.count - a.count).slice(0, 18);
+const years = showArchive ? (fa ? await getArchiveFa() : await getArchive()) : [];
+const recentMonths = years.flatMap((y) => y.months).slice(0, 8);
+---
+
+<aside class="rail">
+  {
+    tags.length > 0 && (
+      <section class="rail-box">
+        <h2 class="rail-h">{t(lang, 'tags')}</h2>
+        <div class="rail-tags">
+          {tags.map((tag) => (
+            <a href={`${base}/tags/${tag.tag}/`}>
+              {tag.tag}
+              <b>{faNum(tag.count, lang)}</b>
+            </a>
+          ))}
+        </div>
+        <a class="rail-more" href={`${base}/tags/`}>{t(lang, 'allTags')}</a>
+      </section>
+    )
+  }
+
+  {
+    showArchive && recentMonths.length > 0 && (
+      <section class="rail-box">
+        <h2 class="rail-h">{t(lang, 'archive')}</h2>
+        <div class="rail-archive">
+          {recentMonths.map((m) => (
+            <a href={`${base}/${m.year}/${m.slug}/`}>
+              <span>{m.label}</span>
+              <span class="n">{faNum(m.counts.total, lang)}</span>
+            </a>
+          ))}
+        </div>
+        <a class="rail-more" href={`${base}/archive/`}>{t(lang, 'fullArchive')}</a>
+      </section>
+    )
+  }
+</aside>

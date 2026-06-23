@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import Stream from '../../components/Stream.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { getStreamItems } from '../../lib/stream';
+
+const items = (await getStreamItems()).filter((i) => i.lang === 'fa');
+---
+
+<Base lang="fa" title="خانه" description="نوشته‌ها، پیوندها و یادداشت‌های سینا سعیدی.">
+  <section class="intro">
+    <h1>سلام، من سینا هستم 👋</h1>
+    <p>
+      مهندس نرم‌افزار و علاقه‌مند به نرم‌افزار آزاد در <a href="https://vio.com">Vio.com</a>. دوست
+      دارم سیستم‌ها را باز کنم و ببینم چطور کار می‌کنند. اینجا <a href="/fa/writing/">نوشته‌ها</a>،
+      <a href="/fa/links/">پیوندهای</a> خواندنی و <a href="/fa/notes/">یادداشت‌های</a> کوتاهم را نگه
+      می‌دارم.
+    </p>
+  </section>
+
+  <Stream items={items} lang="fa" />
+
+  <Sidebar slot="sidebar" lang="fa" contentLang="fa" />
+</Base>

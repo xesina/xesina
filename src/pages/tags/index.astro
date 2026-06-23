@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getTags } from '../../lib/taxonomy';
+
+const tags = await getTags();
+const total = tags.reduce((n, t) => n + t.count, 0);
+---
+
+<Base title="Tags" description="Browse content on xesina.com by tag.">
+  <section class="page-head">
+    <h1>Tags</h1>
+    <p>{tags.length} tags across {total} items. Each tag has its own page and feed.</p>
+  </section>
+
+  <div class="tagcloud">
+    {
+      tags.map((t) => (
+        <a href={`/tags/${t.tag}/`}>
+          {t.tag}
+          <b>{t.count}</b>
+        </a>
+      ))
+    }
+    {tags.length === 0 && <p class="empty">No tags yet.</p>}
+  </div>
+</Base>
