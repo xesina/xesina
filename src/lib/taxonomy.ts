@@ -118,7 +118,7 @@ export async function getItemsByMonth(
   );
 }
 
-/* ---------------- Jalali (Shamsi) archive — Persian edition ---------------- */
+/* ---------------- Jalali (Shamsi) archive - Persian edition ---------------- */
 
 export const J_MONTH_SLUGS = [
   'farvardin', 'ordibehesht', 'khordad', 'tir', 'mordad', 'shahrivar',

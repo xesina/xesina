@@ -25,7 +25,7 @@ export async function buildFeed(
   if (opts.tag) items = items.filter((i) => i.tags.includes(opts.tag!));
 
   return rss({
-    title: opts.titleSuffix ? `${SITE.title} — ${opts.titleSuffix}` : SITE.title,
+    title: opts.titleSuffix ? `${SITE.title} · ${opts.titleSuffix}` : SITE.title,
     description: opts.description ?? SITE.description,
     site,
     items: items.map((it) => ({

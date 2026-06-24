@@ -39,7 +39,7 @@ export const faNum = (n: string | number, lang: Lang = 'en') =>
 /** Rough word count from raw markdown. */
 export const wordCount = (s: string) => (s.trim().match(/\S+/g) || []).length;
 
-/** Hostname without leading www. — for external link labels. */
+/** Hostname without leading www. - for external link labels. */
 export const hostOf = (url: string) => {
   try {
     return new URL(url).hostname.replace(/^www\./, '');

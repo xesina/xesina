@@ -11,12 +11,12 @@ together, newest first.
 
 ## Why a stream?
 
-I liked the idea of a single timeline — the way [Simon Willison's site](https://simonwillison.net/)
+I liked the idea of a single timeline, the way [Simon Willison's site](https://simonwillison.net/)
 mixes long posts, saved links, and short notes into one flow. So that's what this is:
 
-- **Entries** — longer posts like this one.
-- **Links** — something I read and want to remember, with a line on why.
-- **Notes** — short thoughts, no ceremony.
+- **Entries**: longer posts like this one.
+- **Links**: something I read and want to remember, with a line on why.
+- **Notes**: short thoughts, no title needed.
 
 Everything has a permalink and an RSS feed. If you only want the long stuff, there's a
 [writing feed](/writing/feed.xml) too.

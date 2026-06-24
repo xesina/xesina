@@ -7,7 +7,7 @@ tags: [distributed-systems, reading]
 ---
 
 The visualisations here are what finally made the leader-election dance click for me.
-If you've only ever skimmed the paper, spend ten minutes with the interactive version —
-watching a term increment in real time beats any diagram.
+If you've only ever skimmed the paper, spend ten minutes with the interactive version.
+Watching a term increment in real time beats any diagram.
 
-(Placeholder link — swap in your own in `src/content/links/`.)
+(Placeholder link. Swap in your own in `src/content/links/`.)

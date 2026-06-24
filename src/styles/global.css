@@ -1,5 +1,5 @@
 /* ============================================================
-   xesina.com — global styles
+   xesina.com - global styles
    Minimal, modern, auto light/dark. Onest + Geist Mono.
    ============================================================ */
 
@@ -164,7 +164,7 @@ img { max-width: 100%; height: auto; display: block; }
   letter-spacing: normal;
 }
 
-/* Geist Mono has no Persian digits — use Vazirmatn for meta/numerals in RTL */
+/* Geist Mono has no Persian digits - use Vazirmatn for meta/numerals in RTL */
 [dir='rtl'] .mono,
 [dir='rtl'] .time,
 [dir='rtl'] .day,

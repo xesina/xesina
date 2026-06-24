@@ -9,12 +9,12 @@ interface Props {
   title?: string;
   description?: string;
   ogType?: 'website' | 'article';
-  /** Document language — drives full-page direction. */
+  /** Document language; drives full-page direction. */
   lang?: 'en' | 'fa';
 }
 
 const { title, description = SITE.description, ogType = 'website', lang = 'en' } = Astro.props;
-const pageTitle = title ? `${title} — ${SITE.title}` : SITE.title;
+const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const hasSidebar = Astro.slots.has('sidebar');
 const dir = lang === 'fa' ? 'rtl' : 'ltr';
@@ -27,7 +27,7 @@ const dir = lang === 'fa' ? 'rtl' : 'ltr';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="alternate" type="application/rss+xml" title={`${SITE.title} — everything`} href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.title} · everything`} href="/feed.xml" />
 
     <title>{pageTitle}</title>
     <meta name="description" content={description} />

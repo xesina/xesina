@@ -10,7 +10,7 @@ const items = (await getStreamItems('en')).filter((i) => i.type === 'link');
 <Base title="Links" description="External links worth saving, with commentary, by Sina Saeidi.">
   <section class="intro">
     <h1>Links</h1>
-    <p>Things I've read and want to remember — each with a line on why it's worth your time.</p>
+    <p>Things I've read and want to remember, each with a note on why.</p>
   </section>
   <Stream items={items} />
 

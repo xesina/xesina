@@ -16,10 +16,10 @@ export interface StreamItem {
   description?: string;
   /** Word count (entries only). */
   words?: number;
-  /** Rendered body component (notes only — shown inline in the stream). */
+  /** Rendered body component (notes only - shown inline in the stream). */
   Content?: Awaited<ReturnType<typeof render>>['Content'];
   tags: string[];
-  /** Content language — 'fa' renders right-to-left with a Persian font. */
+  /** Content language - 'fa' renders right-to-left with a Persian font. */
   lang: 'en' | 'fa';
 }
 
