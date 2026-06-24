@@ -36,7 +36,11 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   background: var(--bg);
@@ -47,10 +51,13 @@ body {
   letter-spacing: -0.011em;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
 }
 
 a { color: inherit; }
-img { max-width: 100%; display: block; }
+/* never let long words / URLs force horizontal scroll on small screens */
+h1, h2, h3, p, li, blockquote, .t, .ex, .pdesc { overflow-wrap: break-word; }
+img { max-width: 100%; height: auto; display: block; }
 .mono { font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace; }
 
 .shell {
@@ -124,6 +131,9 @@ img { max-width: 100%; display: block; }
 }
 .rail-more:hover { color: var(--fg); }
 
+@media (max-width: 900px) {
+  .layout { gap: 40px; }
+}
 @media (max-width: 820px) {
   .layout { grid-template-columns: 1fr; gap: 0; }
   .rail {
@@ -247,7 +257,7 @@ img { max-width: 100%; display: block; }
 /* ---------- intro ---------- */
 .intro { padding: 30px 0 14px; }
 .intro h1 {
-  font-size: 1.55rem;
+  font-size: clamp(1.4rem, 1.15rem + 1.3vw, 1.55rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   margin-bottom: 12px;
@@ -394,7 +404,7 @@ img { max-width: 100%; display: block; }
 [dir='rtl'] .post-head .back::before { content: '→'; }
 .post-head .back:hover { color: var(--fg); }
 .post-head h1 {
-  font-size: 1.9rem;
+  font-size: clamp(1.55rem, 1.2rem + 2.2vw, 1.9rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.2;
@@ -459,7 +469,7 @@ img { max-width: 100%; display: block; }
 /* ---------- projects ---------- */
 .page-head { padding: 30px 0 6px; }
 .page-head h1 {
-  font-size: 1.55rem;
+  font-size: clamp(1.4rem, 1.15rem + 1.3vw, 1.55rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   margin-bottom: 10px;
@@ -577,7 +587,44 @@ img { max-width: 100%; display: block; }
 .month-jump { display: flex; flex-wrap: wrap; gap: 6px; margin: 20px 0 4px; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 520px) {
-  .post-head h1 { font-size: 1.6rem; }
-  .intro h1 { font-size: 1.4rem; }
+
+/* tablet/large phone: tighten the side gutters a little */
+@media (max-width: 640px) {
+  .shell { padding-left: 20px; padding-right: 20px; padding-bottom: 84px; }
+  .intro, .page-head { padding-top: 24px; }
+}
+
+/* phone: stack the header (brand row, then a full-width nav row) and
+   grow tap targets so nothing crowds or overflows */
+@media (max-width: 480px) {
+  .shell { padding-left: 16px; padding-right: 16px; padding-bottom: 72px; }
+
+  .top {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    padding: 20px 0 18px;
+  }
+  .nav-main {
+    width: 100%;
+    flex-wrap: wrap;
+    /* pull the first link's text flush with the page gutter */
+    margin-inline-start: -11px;
+  }
+  .nav-main a { padding: 9px 11px; }        /* ~40px tall touch targets */
+  .nav-main a.rss { padding: 9px 11px; }
+  .lang-switch { margin-inline-start: auto; } /* push EN/فا to the row's end */
+  .lang-switch a { padding: 7px 9px; }
+
+  .intro p, .page-head p { font-size: 1rem; }
+  .day { padding-top: 20px; }
+  .more { width: 100%; text-align: center; }
+
+  /* keep project title + status/year from colliding on tiny screens */
+  .project .ptop { flex-wrap: wrap; gap: 6px 10px; }
+  .project .pyear { margin-inline-start: auto; }
+}
+
+/* opt into comfortable touch feedback only where there's no hover */
+@media (hover: none) {
+  .t a:active { color: var(--accent); }
 }
