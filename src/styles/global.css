@@ -172,6 +172,8 @@ img { max-width: 100%; height: auto; display: block; }
 [dir='rtl'] .post-meta,
 [dir='rtl'] .ex .wc,
 [dir='rtl'] .browse a,
+[dir='rtl'] .pstatus,
+[dir='rtl'] .pyear,
 :lang(fa) .mono {
   font-family: 'Vazirmatn', 'Onest', sans-serif;
   letter-spacing: normal;
