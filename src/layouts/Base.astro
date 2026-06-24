@@ -30,7 +30,6 @@ const {
 const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage, Astro.site).href;
-const hasSidebar = Astro.slots.has('sidebar');
 const dir = lang === 'fa' ? 'rtl' : 'ltr';
 
 const jsonLd =
@@ -110,22 +109,16 @@ const jsonLd =
   </head>
   <body>
     <a class="skip" href="#main">{t(lang, 'skip')}</a>
-    <div class={hasSidebar ? 'shell shell-wide' : 'shell'}>
+    <!-- Same grid on every page so the header and main column never shift
+         between pages; the right column is just empty when there's no sidebar. -->
+    <div class="shell shell-wide">
       <Header lang={lang} />
-      {
-        hasSidebar ? (
-          <div class="layout">
-            <main id="main">
-              <slot />
-            </main>
-            <slot name="sidebar" />
-          </div>
-        ) : (
-          <main id="main">
-            <slot />
-          </main>
-        )
-      }
+      <div class="layout">
+        <main id="main">
+          <slot />
+        </main>
+        <slot name="sidebar" />
+      </div>
       <Footer lang={lang} />
     </div>
     {
