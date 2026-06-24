@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../consts';
+
+const mailto = `mailto:${SITE.email}?subject=Project%20inquiry`;
+---
+
+<Base
+  title="Work with me"
+  description="Sina Saeidi is available for freelance and consulting work: backend, distributed systems, and reliability."
+>
+  <section class="page-head">
+    {
+      SITE.available ? (
+        <div class="avail"><span class="dot"></span>Available for new projects</div>
+      ) : (
+        <div class="avail avail-off"><span class="dot"></span>Not taking new projects right now</div>
+      )
+    }
+    <h1>Work with me</h1>
+    <p>
+      I'm a software engineer who helps teams design, build, and ship reliable backend systems. I
+      take on a small number of freelance and consulting engagements at a time.
+    </p>
+  </section>
+
+  <section class="hire">
+    <h2 class="hire-h">What I can help with</h2>
+    <ul class="offer">
+      <li>
+        <b>Backend &amp; distributed systems</b>
+        <span>Designing, building, and scaling services, APIs, and data pipelines.</span>
+      </li>
+      <li>
+        <b>Performance &amp; reliability</b>
+        <span>Finding and fixing bottlenecks, improving observability, taming flaky systems.</span>
+      </li>
+      <li>
+        <b>Technical advisory</b>
+        <span>Architecture reviews, code review, and mentoring for your team.</span>
+      </li>
+      <li>
+        <b>Open source</b>
+        <span>Sponsored features, integrations, and maintenance.</span>
+      </li>
+    </ul>
+
+    <h2 class="hire-h">How it works</h2>
+    <ol class="steps">
+      <li>Email me a few lines about your project, goals, and timeline.</li>
+      <li>We do a short call to scope the work and check it's a good fit.</li>
+      <li>I send a proposal with clear milestones, then we get started.</li>
+    </ol>
+
+    <h2 class="hire-h">A good fit if</h2>
+    <ul class="fit">
+      <li>You're a startup or team that needs senior help on a focused problem.</li>
+      <li>You value clear communication and working software over ceremony.</li>
+      <li>You want someone who will understand the system, not just the ticket.</li>
+    </ul>
+
+    <div class="cta-card">
+      <p>Have something in mind? Tell me about your project and what you're trying to ship.</p>
+      <a class="cta" href={mailto}>Tell me about your project →</a>
+      <span class="cta-alt">or email <a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
+    </div>
+
+    <p class="hire-note">
+      <em>This is placeholder copy. Edit <code>src/pages/hire.astro</code> to make the offer yours.</em>
+    </p>
+  </section>
+</Base>

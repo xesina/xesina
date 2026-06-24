@@ -528,6 +528,88 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .project:hover .plinks span { color: var(--fg); }
 
+/* ---------- hire / work-with-me ---------- */
+.avail {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.avail .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #16a34a 22%, transparent);
+}
+.avail.avail-off .dot { background: var(--faint); box-shadow: none; }
+
+.hire-h {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 40px 0 4px;
+}
+
+.offer { list-style: none; margin-top: 16px; }
+.offer li { padding: 16px 0; border-top: 1px solid var(--line); }
+.offer li:first-child { border-top: none; }
+.offer b { display: block; font-size: 1.02rem; font-weight: 600; margin-bottom: 3px; }
+.offer span { color: var(--muted); font-size: 0.95rem; }
+
+.steps,
+.fit { margin-top: 12px; padding-inline-start: 1.25em; }
+.steps li { margin: 7px 0; }
+.steps li::marker { color: var(--faint); }
+.fit { list-style: none; padding-inline-start: 0; }
+.fit li {
+  position: relative;
+  padding-inline-start: 1.3em;
+  margin: 7px 0;
+  color: var(--muted);
+}
+.fit li::before {
+  content: '→';
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--accent);
+}
+[dir='rtl'] .fit li::before { content: '←'; }
+
+.cta-card {
+  margin-top: 36px;
+  padding: 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.cta-card p { color: var(--fg); font-size: 1.02rem; max-width: 52ch; }
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--fg);
+  color: var(--bg);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 11px 20px;
+  border-radius: 10px;
+  transition: opacity 0.16s;
+}
+.cta:hover { opacity: 0.88; }
+.cta-alt { font-size: 0.85rem; color: var(--faint); }
+.cta-alt a { color: var(--muted); text-decoration: none; }
+.cta-alt a:hover { color: var(--fg); }
+
+.hire-note { margin-top: 30px; font-size: 0.85rem; color: var(--faint); }
+
 /* ---------- tags index ---------- */
 .tagcloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
 .tagcloud a {

@@ -7,6 +7,8 @@ export const SITE = {
   email: 'hi@xesina.com',
   github: 'https://github.com/xesina',
   linkedin: 'https://www.linkedin.com/in/xesina/',
+  // Flip to false to show "not currently taking new projects" on /hire.
+  available: true,
   // Google Search Console "HTML tag" verification token (the content="..." value).
   googleSiteVerification: 'zkJsnS7JYbDhivGtxz0-3hbiz-M92eNsL3bJD0ey--4',
 } as const;
@@ -15,4 +17,5 @@ export const NAV = [
   { key: 'home', href: '/' },
   { key: 'projects', href: '/projects/' },
   { key: 'about', href: '/about/' },
+  { key: 'hire', href: '/hire/' },
 ] as const;
