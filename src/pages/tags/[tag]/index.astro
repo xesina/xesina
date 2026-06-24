@@ -5,12 +5,12 @@ import Sidebar from '../../../components/Sidebar.astro';
 import { getTags, getItemsByTag } from '../../../lib/taxonomy';
 
 export async function getStaticPaths() {
-  const tags = await getTags();
+  const tags = await getTags('en');
   return tags.map((t) => ({ params: { tag: t.tag }, props: { tag: t.tag, count: t.count } }));
 }
 
 const { tag, count } = Astro.props;
-const items = await getItemsByTag(tag);
+const items = await getItemsByTag(tag, 'en');
 ---
 
 <Base title={`#${tag}`} description={`Items tagged ${tag} on xesina.com.`}>
@@ -25,5 +25,5 @@ const items = await getItemsByTag(tag);
 
   <Stream items={items} />
 
-  <Sidebar slot="sidebar" />
+  <Sidebar slot="sidebar" contentLang="en" />
 </Base>

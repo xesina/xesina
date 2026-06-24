@@ -9,7 +9,8 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 
 const year = new Date().getUTCFullYear();
-const years = await getArchive();
+// Footer year links are English-edition only.
+const years = await getArchive('en');
 ---
 
 <footer class="foot">

@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { getTags } from '../../lib/taxonomy';
 
-const tags = await getTags();
+const tags = await getTags('en');
 const total = tags.reduce((n, t) => n + t.count, 0);
 ---
 

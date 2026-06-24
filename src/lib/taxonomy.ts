@@ -34,8 +34,8 @@ export async function getTags(lang?: 'en' | 'fa'): Promise<TagCount[]> {
     .sort((a, b) => a.tag.localeCompare(b.tag));
 }
 
-export async function getItemsByTag(tag: string): Promise<StreamItem[]> {
-  return (await getStreamItems()).filter((it) => it.tags.includes(tag));
+export async function getItemsByTag(tag: string, lang?: 'en' | 'fa'): Promise<StreamItem[]> {
+  return (await getStreamItems(lang)).filter((it) => it.tags.includes(tag));
 }
 
 /* ---------------- archives ---------------- */
@@ -70,8 +70,8 @@ function tally(counts: TypeCounts, type: StreamItem['type']) {
 }
 
 /** Years and months that actually contain content, newest first. */
-export async function getArchive(): Promise<YearBucket[]> {
-  const items = await getStreamItems();
+export async function getArchive(lang?: 'en' | 'fa'): Promise<YearBucket[]> {
+  const items = await getStreamItems(lang);
   const years = new Map<number, YearBucket>();
 
   for (const it of items) {
@@ -104,12 +104,16 @@ export async function getArchive(): Promise<YearBucket[]> {
   return sorted;
 }
 
-export async function getItemsByYear(year: number): Promise<StreamItem[]> {
-  return (await getStreamItems()).filter((it) => it.pubDate.getUTCFullYear() === year);
+export async function getItemsByYear(year: number, lang?: 'en' | 'fa'): Promise<StreamItem[]> {
+  return (await getStreamItems(lang)).filter((it) => it.pubDate.getUTCFullYear() === year);
 }
 
-export async function getItemsByMonth(year: number, monthIndex: number): Promise<StreamItem[]> {
-  return (await getStreamItems()).filter(
+export async function getItemsByMonth(
+  year: number,
+  monthIndex: number,
+  lang?: 'en' | 'fa',
+): Promise<StreamItem[]> {
+  return (await getStreamItems(lang)).filter(
     (it) => it.pubDate.getUTCFullYear() === year && it.pubDate.getUTCMonth() === monthIndex,
   );
 }

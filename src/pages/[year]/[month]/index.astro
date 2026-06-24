@@ -5,7 +5,7 @@ import Sidebar from '../../../components/Sidebar.astro';
 import { getArchive, getItemsByMonth } from '../../../lib/taxonomy';
 
 export async function getStaticPaths() {
-  const years = await getArchive();
+  const years = await getArchive('en');
   return years.flatMap((y) =>
     y.months.map((m) => ({
       params: { year: String(y.year), month: m.slug },
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { year, monthIndex, label, total } = Astro.props;
-const items = await getItemsByMonth(year, monthIndex);
+const items = await getItemsByMonth(year, monthIndex, 'en');
 ---
 
 <Base title={`Archive ${label}`} description={`Everything from ${label} on xesina.com.`}>
@@ -30,5 +30,5 @@ const items = await getItemsByMonth(year, monthIndex);
 
   <Stream items={items} />
 
-  <Sidebar slot="sidebar" />
+  <Sidebar slot="sidebar" contentLang="en" />
 </Base>

@@ -11,10 +11,16 @@ const titleFor = (it: { title?: string; type: StreamType }) =>
  */
 export async function buildFeed(
   context: { site?: URL | undefined },
-  opts: { type?: StreamType; tag?: string; titleSuffix?: string; description?: string } = {},
+  opts: {
+    type?: StreamType;
+    tag?: string;
+    lang?: 'en' | 'fa';
+    titleSuffix?: string;
+    description?: string;
+  } = {},
 ) {
   const site = context.site ?? new URL(SITE.url);
-  let items = await getStreamItems();
+  let items = await getStreamItems(opts.lang);
   if (opts.type) items = items.filter((i) => i.type === opts.type);
   if (opts.tag) items = items.filter((i) => i.tags.includes(opts.tag!));
 

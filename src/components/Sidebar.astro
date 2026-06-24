@@ -17,7 +17,7 @@ const fa = lang === 'fa';
 const base = fa ? '/fa' : '';
 
 const tags = (await getTags(contentLang)).sort((a, b) => b.count - a.count).slice(0, 18);
-const years = showArchive ? (fa ? await getArchiveFa() : await getArchive()) : [];
+const years = showArchive ? (fa ? await getArchiveFa() : await getArchive(contentLang)) : [];
 const recentMonths = years.flatMap((y) => y.months).slice(0, 8);
 ---
 

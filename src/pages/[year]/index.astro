@@ -5,13 +5,13 @@ import Sidebar from '../../components/Sidebar.astro';
 import { getArchive, getItemsByYear } from '../../lib/taxonomy';
 
 export async function getStaticPaths() {
-  const years = await getArchive();
+  const years = await getArchive('en');
   return years.map((y) => ({ params: { year: String(y.year) }, props: { bucket: y } }));
 }
 
 const { bucket } = Astro.props;
 const year = bucket.year;
-const items = await getItemsByYear(year);
+const items = await getItemsByYear(year, 'en');
 ---
 
 <Base title={`Archive ${year}`} description={`Everything from ${year} on xesina.com.`}>
@@ -29,5 +29,5 @@ const items = await getItemsByYear(year);
 
   <Stream items={items} />
 
-  <Sidebar slot="sidebar" />
+  <Sidebar slot="sidebar" contentLang="en" />
 </Base>

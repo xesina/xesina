@@ -25,7 +25,8 @@ export interface StreamItem {
 
 const notDraft = (e: { data: { draft?: boolean } }) => !e.data.draft;
 
-export async function getStreamItems(): Promise<StreamItem[]> {
+/** All stream items, optionally restricted to one content language. */
+export async function getStreamItems(lang?: 'en' | 'fa'): Promise<StreamItem[]> {
   const [entries, links, notes] = await Promise.all([
     getCollection('entries', notDraft),
     getCollection('links', notDraft),
@@ -76,7 +77,8 @@ export async function getStreamItems(): Promise<StreamItem[]> {
     });
   }
 
-  return items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+  const result = lang ? items.filter((i) => i.lang === lang) : items;
+  return result.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 }
 
 export interface DayGroup {

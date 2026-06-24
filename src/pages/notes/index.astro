@@ -4,7 +4,7 @@ import Stream from '../../components/Stream.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import { getStreamItems } from '../../lib/stream';
 
-const items = (await getStreamItems()).filter((i) => i.type === 'note');
+const items = (await getStreamItems('en')).filter((i) => i.type === 'note');
 ---
 
 <Base title="Notes" description="Short thoughts by Sina Saeidi.">
@@ -14,5 +14,5 @@ const items = (await getStreamItems()).filter((i) => i.type === 'note');
   </section>
   <Stream items={items} />
 
-  <Sidebar slot="sidebar" />
+  <Sidebar slot="sidebar" contentLang="en" />
 </Base>

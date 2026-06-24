@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { getArchive, type TypeCounts } from '../../lib/taxonomy';
 
-const years = await getArchive();
+const years = await getArchive('en');
 
 const summary = (c: TypeCounts) => {
   const parts: string[] = [];
