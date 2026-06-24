@@ -4,7 +4,7 @@ export const SITE = {
   author: 'Sina Saeidi',
   tagline: 'Software engineer · open-source enthusiast',
   url: 'https://xesina.com',
-  email: 'hello@xesina.com',
+  email: 'hi@xesina.com',
   github: 'https://github.com/xesina',
   linkedin: 'https://www.linkedin.com/in/xesina/',
   // Google Search Console "HTML tag" verification token (the content="..." value).
