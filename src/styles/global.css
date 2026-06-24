@@ -171,6 +171,7 @@ img { max-width: 100%; height: auto; display: block; }
 [dir='rtl'] .kind,
 [dir='rtl'] .post-meta,
 [dir='rtl'] .ex .wc,
+[dir='rtl'] .browse a,
 :lang(fa) .mono {
   font-family: 'Vazirmatn', 'Onest', sans-serif;
   letter-spacing: normal;
