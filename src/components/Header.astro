@@ -1,6 +1,7 @@
 ---
 import { SITE, NAV } from '../consts';
 import { t, type Lang } from '../i18n';
+import { getRouteSet, localeHref } from '../lib/routes';
 
 interface Props {
   lang?: Lang;
@@ -10,6 +11,11 @@ const { lang = 'en' } = Astro.props;
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
+
+// Language switch: stay on the same page in the other language when it exists.
+const routes = await getRouteSet();
+const enHref = localeHref(path, 'en', lang, routes);
+const faHref = localeHref(path, 'fa', lang, routes);
 
 // On the Persian edition, nav links stay within `/fa/`.
 const homeHref = lang === 'fa' ? '/fa/' : '/';
@@ -31,8 +37,8 @@ const hrefFor = (key: string, href: string) =>
       })
     }
     <span class="lang-switch" aria-label="Language">
-      <a href="/" lang="en" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
-      <a href="/fa/" lang="fa" aria-current={lang === 'fa' ? 'page' : undefined}>فارسی</a>
+      <a href={enHref} lang="en" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+      <a href={faHref} lang="fa" aria-current={lang === 'fa' ? 'page' : undefined}>فارسی</a>
     </span>
     <a class="rss" href="/feed.xml" title={t(lang, 'rss')} aria-label={t(lang, 'rss')}>
       <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">

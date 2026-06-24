@@ -15,7 +15,7 @@ const { title, url, description, pubDate, tags, lang } = entry.data;
 const base = lang === 'fa' ? '/fa' : '';
 ---
 
-<Base title={title} description={description} ogType="article" lang={lang}>
+<Base title={title} description={description} ogType="article" lang={lang} pubDate={pubDate}>
   <article>
     <header class="post-head">
       <a class="back" href={`${base}/links/`}>{t(lang, 'links')}</a>

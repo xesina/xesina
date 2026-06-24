@@ -15,7 +15,15 @@ const { title, description, pubDate, updatedDate, tags, lang } = entry.data;
 const base = lang === 'fa' ? '/fa' : '';
 ---
 
-<Base title={title} description={description} ogType="article" lang={lang}>
+<Base
+  title={title}
+  description={description}
+  ogType="article"
+  lang={lang}
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  ogImage={lang === 'en' ? `/open-graph/${entry.id}.png` : undefined}
+>
   <article>
     <header class="post-head">
       <a class="back" href={`${base}/writing/`}>{t(lang, 'writing')}</a>

@@ -11,13 +11,57 @@ interface Props {
   ogType?: 'website' | 'article';
   /** Document language; drives full-page direction. */
   lang?: 'en' | 'fa';
+  pubDate?: Date;
+  updatedDate?: Date;
+  /** Open Graph image path (defaults to the site card). */
+  ogImage?: string;
 }
 
-const { title, description = SITE.description, ogType = 'website', lang = 'en' } = Astro.props;
+const {
+  title,
+  description = SITE.description,
+  ogType = 'website',
+  lang = 'en',
+  pubDate,
+  updatedDate,
+  ogImage = '/open-graph/_site.png',
+} = Astro.props;
+
 const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = new URL(ogImage, Astro.site).href;
 const hasSidebar = Astro.slots.has('sidebar');
 const dir = lang === 'fa' ? 'rtl' : 'ltr';
+
+const jsonLd =
+  ogType === 'article' && pubDate
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description,
+        datePublished: pubDate.toISOString(),
+        dateModified: (updatedDate ?? pubDate).toISOString(),
+        inLanguage: lang,
+        url: canonical,
+        mainEntityOfPage: canonical,
+        image: ogImageUrl,
+        author: { '@type': 'Person', name: SITE.author, url: SITE.url },
+        publisher: { '@type': 'Person', name: SITE.author, url: SITE.url },
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: SITE.title,
+        url: SITE.url,
+        inLanguage: lang,
+        author: {
+          '@type': 'Person',
+          name: SITE.author,
+          url: SITE.url,
+          sameAs: [SITE.github, SITE.linkedin],
+        },
+      };
 ---
 
 <!doctype html>
@@ -43,9 +87,18 @@ const dir = lang === 'fa' ? 'rtl' : 'ltr';
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:locale" content={lang === 'fa' ? 'fa_IR' : 'en_US'} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    {pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -75,5 +128,14 @@ const dir = lang === 'fa' ? 'rtl' : 'ltr';
       }
       <Footer lang={lang} />
     </div>
+    {
+      SITE.goatcounter && (
+        <script
+          data-goatcounter={SITE.goatcounter}
+          async
+          src="https://gc.zgo.at/count.js"
+        />
+      )
+    }
   </body>
 </html>
