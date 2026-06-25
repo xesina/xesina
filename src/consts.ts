@@ -1,5 +1,8 @@
 export const SITE = {
   title: 'Sina Saeidi',
+  // Persian form of the name, used as the brand on /fa pages and as the
+  // Person `alternateName` in JSON-LD so name searches in either script match.
+  nameFa: 'سینا سعیدی',
   description: 'Software engineer and open-source enthusiast. Writing, links, and notes.',
   author: 'Sina Saeidi',
   tagline: 'Software engineer · open-source enthusiast',

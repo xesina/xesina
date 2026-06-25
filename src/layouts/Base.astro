@@ -27,10 +27,24 @@ const {
   ogImage = '/open-graph/_site.png',
 } = Astro.props;
 
-const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
+// Brand the page in the reader's script so name searches in either language match.
+const brand = lang === 'fa' ? SITE.nameFa : SITE.title;
+const pageTitle = title ? `${title} · ${brand}` : brand;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage, Astro.site).href;
 const dir = lang === 'fa' ? 'rtl' : 'ltr';
+
+// hreflang: only the statically mirrored pages have a true en/fa counterpart
+// (posts share a single canonical URL, so they get no alternates).
+const MIRRORED = new Set(['/', '/writing/', '/links/', '/notes/', '/tags/', '/archive/', '/about/', '/projects/', '/hire/']);
+const bare = Astro.url.pathname.startsWith('/fa/')
+  ? Astro.url.pathname.slice(3)
+  : Astro.url.pathname === '/fa'
+    ? '/'
+    : Astro.url.pathname;
+const hasAlternates = MIRRORED.has(bare);
+const enHref = new URL(bare, Astro.site).href;
+const faHref = new URL(bare === '/' ? '/fa/' : `/fa${bare}`, Astro.site).href;
 
 const jsonLd =
   ogType === 'article' && pubDate
@@ -45,8 +59,8 @@ const jsonLd =
         url: canonical,
         mainEntityOfPage: canonical,
         image: ogImageUrl,
-        author: { '@type': 'Person', name: SITE.author, url: SITE.url },
-        publisher: { '@type': 'Person', name: SITE.author, url: SITE.url },
+        author: { '@type': 'Person', name: SITE.author, alternateName: SITE.nameFa, url: SITE.url },
+        publisher: { '@type': 'Person', name: SITE.author, alternateName: SITE.nameFa, url: SITE.url },
       }
     : {
         '@context': 'https://schema.org',
@@ -57,6 +71,7 @@ const jsonLd =
         author: {
           '@type': 'Person',
           name: SITE.author,
+          alternateName: SITE.nameFa,
           url: SITE.url,
           sameAs: [SITE.github, SITE.linkedin],
         },
@@ -79,13 +94,20 @@ const jsonLd =
       <meta name="google-site-verification" content={SITE.googleSiteVerification} />
     )}
     <link rel="canonical" href={canonical} />
+    {hasAlternates && (
+      <>
+        <link rel="alternate" hreflang="en" href={enHref} />
+        <link rel="alternate" hreflang="fa" href={faHref} />
+        <link rel="alternate" hreflang="x-default" href={enHref} />
+      </>
+    )}
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:site_name" content={brand} />
     <meta property="og:locale" content={lang === 'fa' ? 'fa_IR' : 'en_US'} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
