@@ -24,7 +24,7 @@ const years = await getArchive('en');
     )
   }
   <div class="footmeta">
-    <span>© {year} {SITE.author}</span>
+    <span>© {year} {lang === 'fa' ? SITE.nameFa : SITE.author}</span>
     <span>
       <a href={SITE.github} rel="me" target="_blank">GitHub</a> ·
       <a href={SITE.linkedin} rel="me" target="_blank">LinkedIn</a> ·

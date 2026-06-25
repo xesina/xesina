@@ -24,7 +24,7 @@ const hrefFor = (key: string, href: string) =>
 ---
 
 <header class="top">
-  <a class="brand" href={homeHref}>{SITE.title}</a>
+  <a class="brand" href={homeHref}>{lang === 'fa' ? SITE.nameFa : SITE.title}</a>
   <nav class="nav-main" aria-label="Primary">
     {
       NAV.map((item) => {
