@@ -6,7 +6,7 @@ export const SITE = {
   description: 'Software engineer and open-source enthusiast. Writing, links, and notes.',
   author: 'Sina Saeidi',
   tagline: 'Software engineer · open-source enthusiast',
-  url: 'https://xesina.com',
+  url: 'https://sinasaeidi.com',
   email: 'hi@xesina.com',
   github: 'https://github.com/xesina',
   linkedin: 'https://www.linkedin.com/in/xesina/',

@@ -43,7 +43,7 @@ function card(title: string, description: string) {
     },
     [
       div({ display: 'flex', flexDirection: 'column' }, [
-        div({ fontSize: 28, color: '#9a988e', marginBottom: 28, letterSpacing: 1 }, 'xesina.com'),
+        div({ fontSize: 28, color: '#9a988e', marginBottom: 28, letterSpacing: 1 }, 'sinasaeidi.com'),
         div({ fontSize: 64, fontWeight: 700, color: '#ededec', lineHeight: 1.15 }, title),
         description
           ? div({ fontSize: 30, color: '#9a988e', lineHeight: 1.4, marginTop: 26 }, description)
