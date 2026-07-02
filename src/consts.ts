@@ -7,7 +7,7 @@ export const SITE = {
   author: 'Sina Saeidi',
   tagline: 'Software engineer · open-source enthusiast',
   url: 'https://sinasaeidi.com',
-  email: 'hi@xesina.com',
+  email: 'hi@sinasaeidi.com',
   github: 'https://github.com/xesina',
   linkedin: 'https://www.linkedin.com/in/xesina/',
   // Flip to false to show "not currently taking new projects" on /hire.
